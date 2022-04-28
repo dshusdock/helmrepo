@@ -1,10 +1,10 @@
 client-part:
-    client_ver: "dshusdock/triagetool:21"
+    client_ver: "dshusdock/triagetool:latest"
 server-part:
-    server_ver: "dshusdock/ple-triage-server:tue1"
+    server_ver: "dshusdock/ple-triage-server:latest"
 mongo-part:
-    mongodb_ms_ver: "dshusdock/ple-db-server:sun4"
+    mongodb_ms_ver: "dshusdock/ple-db-server:latest"
 mysql-part:
-    mysqldb_ms_ver: "dshusdock/ple-mysql-server:wed11"
+    mysqldb_ms_ver: "dshusdock/ple-mysql-server:latest"
 splunk-part:
-    splunk_ms_ver: "dshusdock/ple-splunk-server:dev2"
+    splunk_ms_ver: "dshusdock/ple-splunk-server:latest"

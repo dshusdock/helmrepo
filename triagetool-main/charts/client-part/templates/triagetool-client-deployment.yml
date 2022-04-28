@@ -1,0 +1,21 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: triagetool-client-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      component: web
+  template:
+    metadata:
+      labels:
+        component: web
+    spec:
+      containers:
+        - name: client
+          image: "{{.Values.client_ver}}"
+          ports:
+            - containerPort: 80
+      imagePullSecrets:
+        - name: dockerreg

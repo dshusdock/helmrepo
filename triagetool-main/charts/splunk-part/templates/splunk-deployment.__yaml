@@ -1,0 +1,31 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: splunk
+  name: splunk
+  namespace: default
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: splunk
+  template:
+    metadata:
+      labels:
+        app: splunk
+    spec:
+      containers:
+        - image: splunk/splunk:latest
+          imagePullPolicy: "Always"
+          name: splunk
+          env:
+            - name: SPLUNK_START_ARGS
+              value: "--accept-license"
+            - name: SPLUNK_PASSWORD
+              value: "Admin123!"
+          ports:
+            -  containerPort: 8000  
+               name: webport
+            -  containerPort: 8089
+               name: apiport  

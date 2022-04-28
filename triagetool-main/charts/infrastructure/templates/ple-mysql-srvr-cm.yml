@@ -1,0 +1,10 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: ple-mysql-srvr-cm
+data:
+  # property-like keys; each key maps to a simple value
+  #DB_DNS_NAME: "db-server"
+  #DB_PORT: "3000"  
+  DB_DNS_NAME: "{{ .Values.db_server }}"
+  DB_PORT: "{{ .Values.db_port }}"

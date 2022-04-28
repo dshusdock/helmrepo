@@ -1,0 +1,50 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mysql-db-server-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      component: mysqldb-server
+  template:
+    metadata:
+      labels:
+        component: mysqldb-server
+    spec:
+      containers:
+        - name: mysqldb-server
+          image: dshusdock/ple-mysql-server:wed11
+          ports:
+            - containerPort: 3002
+          volumeMounts:
+            - name: allicat
+              mountPath: "/mnt/allicatnasn1/allicat_inactive"
+              readOnly: true                    
+            - name: config
+              mountPath: "/config"
+              readOnly: true
+          env:
+            - name: MYSQL_ROOT_PASSWORD
+              value: 'password'
+          # Define the environment variable
+            - name: DB_DNS_NAME                                    
+              valueFrom:
+                configMapKeyRef:
+                  name: ple-mysql-srvr-cm           
+                  key: DB_DNS_NAME 
+            - name: DB_PORT                                
+              valueFrom:
+                configMapKeyRef:
+                  name: ple-mysql-srvr-cm           
+                  key: DB_PORT         
+      volumes:
+        - name: allicat
+          hostPath:
+            path: /mnt/allicatnasn1/allicat_inactive
+            type: Directory
+        - name: config
+          configMap:
+            name: ple-mysql-srvr-cm
+      imagePullSecrets:
+        - name: dockerreg

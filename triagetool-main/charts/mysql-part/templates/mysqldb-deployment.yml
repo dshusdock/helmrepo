@@ -1,0 +1,33 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mysqldb-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      component: mysql
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        component: mysql
+    spec:
+      containers:
+        - name: mysql
+          image: dshusdock/dssql:1
+          ports:
+            - containerPort: 3306
+          volumeMounts:
+            - name: mysql-persistent-storage
+              mountPath: /var/lib/mysql
+          env:
+            - name: MYSQL_ROOT_PASSWORD
+              value: 'password'
+      volumes:
+      - name: mysql-persistent-storage
+        persistentVolumeClaim:
+          claimName: mysql-pv-claim
+      imagePullSecrets:
+        - name: dockerreg

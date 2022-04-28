@@ -1,0 +1,21 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ple-splunk-server-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      component: splunkserver
+  template:
+    metadata:
+      labels:
+        component: splunkserver
+    spec:
+      containers:
+        - name: splunkserver
+          image: dshusdock/ple-splunk-server:dev1
+          ports:
+            - containerPort: 3005
+      imagePullSecrets:
+        - name: dockerreg

@@ -1,0 +1,33 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mysqldb-server-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      component: mysqldb-server
+  template:
+    metadata:
+      labels:
+        component: mysqldb-server
+    spec:
+      containers:
+        - name: mysqldbserver
+          image: dshusdock/ple-mysql-server:dev3
+          ports:
+            - containerPort: 3002
+          volumeMounts:
+            - name: allicat
+              mountPath: "/mnt/allicatnasn1/allicat_inactive"
+              readOnly: true
+          env:
+            - name: MYSQL_ROOT_PASSWORD
+              value: 'password'
+      volumes:
+        - name: allicat
+          hostPath:
+            path: /mnt/allicatnasn1/allicat_inactive
+            type: Directory
+      imagePullSecrets:
+        - name: dockerreg

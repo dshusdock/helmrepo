@@ -1,0 +1,21 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ple-db-server-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      component: dbserver
+  template:
+    metadata:
+      labels:
+        component: dbserver
+    spec:
+      containers:
+        - name: dbserver
+          image: dshusdock/ple-db-server:sun4
+          ports:
+            - containerPort: 3000
+      imagePullSecrets:
+        - name: dockerreg

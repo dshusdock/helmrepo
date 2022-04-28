@@ -1,0 +1,49 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: server-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      component: server
+  template:
+    metadata:
+      labels:
+        component: server
+    spec:
+      containers:
+        - name: server
+          image: dshusdock/ple-triage-server:tue1
+          ports:
+            - containerPort: 3001
+          volumeMounts:
+            - name: allicat
+              mountPath: "/mnt/allicatnasn1/allicat_inactive"
+              readOnly: false
+            - name: config
+              mountPath: "/config"
+              readOnly: true
+          env:
+            # Define the environment variable
+            - name: DB_DNS_NAME                                     
+              valueFrom:
+                configMapKeyRef:
+                  name: ple-triage-srvr-cm           
+                  key: DB_DNS_NAME 
+            - name: DB_PORT
+              valueFrom:
+                configMapKeyRef:
+                  name: ple-triage-srvr-cm
+                  key: DB_PORT
+      volumes:
+        - name: allicat
+          hostPath:
+            path: /mnt/allicatnasn1/allicat_inactive
+            type: Directory
+        - name: config
+          configMap:
+            # Provide the name of the ConfigMap you want to mount.
+            name: ple-triage-srvr-cm
+      imagePullSecrets:
+        - name: dockerreg

@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
         - name: client
-          image: dshusdock/triagetool:4
+          image: dshusdock/triagetool:prod2.1
           ports:
             - containerPort: 80
       imagePullSecrets:
